@@ -56,7 +56,7 @@ if (process.versions && process.versions.node && process.versions.node.match(/20
 // Set default DNS resolution order to IPv4 first
 dns.setDefaultResultOrder('ipv4first');
 
-const DEFAULT_PORT = 8000;
+const DEFAULT_PORT = process.env.PORT || 8000;
 const DEFAULT_AUTORUN = false;
 const DEFAULT_LISTEN = false;
 const DEFAULT_CORS_PROXY = false;
@@ -463,13 +463,13 @@ app.use('/api/speech', require('./src/endpoints/speech').router);
 
 const tavernUrl = new URL(
     (cliArguments.ssl ? 'https://' : 'http://') +
-    (listen ? '0.0.0.0' : '127.0.0.1') +
+    '0.0.0.0' +
     (':' + server_port),
 );
 
 const autorunUrl = new URL(
     (cliArguments.ssl ? 'https://' : 'http://') +
-    ('127.0.0.1') +
+    '127.0.0.1' +
     (':' + server_port),
 );
 
@@ -586,13 +586,13 @@ if (cliArguments.ssl) {
         }, app)
         .listen(
             Number(tavernUrl.port) || 443,
-            tavernUrl.hostname,
+            '0.0.0.0',
             setupTasks,
         );
 } else {
     http.createServer(app).listen(
-        Number(tavernUrl.port) || 80,
-        tavernUrl.hostname,
+        Number(tavernUrl.port) || DEFAULT_PORT,
+        '0.0.0.0',
         setupTasks,
     );
 }
