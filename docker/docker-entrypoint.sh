@@ -21,6 +21,21 @@ fi
 
 CONFIG_FILE="config.yaml"
 
+# 根据环境变量修改 config.yaml
+if [ "$LISTEN" = "true" ]; then
+  sed -i 's/listen: .*/listen: true/' $CONFIG_FILE
+fi
+
+if [ "$WHITELIST_MODE" = "false" ]; then
+  sed -i 's/whitelistMode: .*/whitelistMode: false/' $CONFIG_FILE
+fi
+
+if [ "$BASIC_AUTH_MODE" = "true" ]; then
+  sed -i 's/basicAuthMode: .*/basicAuthMode: true/' $CONFIG_FILE
+  sed -i "s/username: .*/username: \"$BASIC_AUTH_USERNAME\"/" $CONFIG_FILE
+  sed -i "s/password: .*/password: \"$BASIC_AUTH_PASSWORD\"/" $CONFIG_FILE
+fi
+
 echo "Starting with the following config:"
 cat $CONFIG_FILE
 
