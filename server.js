@@ -660,13 +660,13 @@ userModule.initUserStorage(dataRoot)
                 }, app)
                 .listen(
                     Number(tavernUrl.port) || 443,
-                    0.0.0.0,
+                    '0.0.0.0',
                     postSetupTasks,
                 );
         } else {
             http.createServer(app).listen(
                 Number(tavernUrl.port) || 80,
-                0.0.0.0,
+                '0.0.0.0',
                 postSetupTasks,
             );
         }
