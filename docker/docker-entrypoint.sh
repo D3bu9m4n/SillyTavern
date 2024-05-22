@@ -21,6 +21,10 @@ if [ "$WHITELIST_MODE" = "false" ]; then
   sed -i 's/whitelistMode: .*/whitelistMode: false/' $CONFIG_FILE
 fi
 
+if [ "$MULTIUSER_MODE" = "true" ]; then
+  sed -i 's/enableUserAccounts: .*/enableUserAccounts: true/' $CONFIG_FILE
+fi
+
 if [ "$BASIC_AUTH_MODE" = "true" ]; then
   sed -i 's/basicAuthMode: .*/basicAuthMode: true/' $CONFIG_FILE
   sed -i "s/username: .*/username: \"$BASIC_AUTH_USERNAME\"/" $CONFIG_FILE
